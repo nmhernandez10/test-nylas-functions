@@ -70,4 +70,30 @@ app.post('/webhooks-callback', async (req, res) => {
   res.status(200).send(challenge);
 });
 
+app.post('/scheduler-webhooks', async (req, res) => {
+  // Saving information about requests
+  await firestore().collection('scheduler-webhooks').doc().create({
+    body: req.body,
+    params: req.params,
+    query: req.query,
+    headers: req.headers,
+    createdAt: firestore.Timestamp.now(),
+  });
+
+  res.sendStatus(200);
+});
+
+app.get('/scheduler-booking-page', async (req, res) => {
+  // Saving information about requests
+  await firestore().collection('scheduler-booking-page-reqs').doc().create({
+    body: req.body,
+    params: req.params,
+    query: req.query,
+    headers: req.headers,
+    createdAt: firestore.Timestamp.now(),
+  });
+
+  res.sendStatus(200);
+});
+
 export default app;
